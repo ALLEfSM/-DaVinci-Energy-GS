@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5"
+      layout:decorate="~{layout}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #e2e2e2 0%, #ffffff 100%);
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        h1 {
+            color: #343a40;
+            margin-bottom: 30px;
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #495057;
+            border-color: #000000;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 15px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+        }
+
+        .btn:hover {
+            background-color: rgba(0, 0, 0, 0.5);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-group-vertical {
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+
+<body>
+<div layout:fragment="conteudo" class="container">
+    <h1>Bem-vindo ao Futuro</h1>
+
+    <div class="btn-group-vertical">
+        <a th:href="@{/homeMedidor}" class="btn btn-primary">Medidor</a>
+        <a th:href="@{/homeDispositivo}" class="btn btn-primary">Dispositivo</a>
+        <a th:href="@{/eficiencia/media}" class="btn btn-primary">Eficiencia</a>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>

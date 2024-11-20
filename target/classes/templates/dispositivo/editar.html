@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5"
+      layout:decorate="~{layout}">
+<head>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <meta charset="UTF-8">
+    <title>Cadastro Dispositivo</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #495057;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .btn {
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .text-danger {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="conteudo" class="container">
+    <h1>Editar Dispositivo</h1>
+    <form th:action="@{/dispositivo/editar}" th:object="${dispositivo}" method="post">
+
+        <input th:field="*{id}" type="hidden"/>
+        <div class="mb-3">
+            <label class="form-label" for="medidor">Medidor</label>
+            <select id="medidor" th:field="*{medidor}" class="form-select">
+                <option value="">Selecione</option>
+                <option th:each="md:${medidor}" th:value="${md.id}" th:text="${md.nome}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="nome">Nome do Dispositivo</label>
+            <input id="nome" type="text" th:field="*{nome}" class="form-control" placeholder="Informe o Nome">
+            <p th:if="${#fields.hasErrors('nome')}" class="text-danger" th:errors="*{nome}"></p>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="tipos">Dispositivos</label>
+            <select id="tipos" th:field="*{tipos}" class="form-select">
+                <option value="">Selecione</option>
+                <option th:each="ti:${tipos}" th:value="${ti}" th:text="${ti.label}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="tempo">Tempo</label>
+            <select id="tempo" th:field="*{tempo}" class="form-select">
+                <option value="">Selecione</option>
+                <option th:each="te:${tempo}" th:value="${te}" th:text="${te.label}"></option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label class="form-label" for="consumo">Potência do Aparelho (em watts)</label>
+            <input id="consumo" type="text" th:field="*{whatts}" class="form-control" placeholder="Informe a potência do aparelho">
+            <p th:if="${#fields.hasErrors('whatts')}" class="text-danger" th:errors="*{whatts}"></p>
+        </div>
+        <button class="btn btn-success">Salvar</button>
+        <br>
+        <p th:text="${msg}" class="text-success text-center"></p>
+    </form>
+</div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro Dispositivo</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #495057;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #495057;
+        }
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .btn {
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 1rem;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border: none;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .text-danger {
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="conteudo" class="container">
+    <h1>Cadastro de Dispositivo</h1>
+    <div class="alert alert-success" th:if="!${#strings.isEmpty(mensagem)}" th:text="${mensagem}"></div>
+    <form th:action="@{/dispositivo/cadastrar}" th:object="${dispositivo}" method="post">
+
+        <div class="alert alert-danger" th:if="${#fields.hasErrors('*')}">
+            <p th:each="err : ${#fields.errors('*')}" th:text="${err}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Medidor</label>
+            <select th:field="*{medidor.id}" class="form-select">
+                <option value="">Selecione</option>
+                <option th:each="md:${medidor}"  th:value="${md.id}" th:text="${md.nome}"></option>
+            </select>
+        </div>
+
+
+
+        <div class="mb-3">
+            <label class="form-label" for="nome">Nome</label>
+            <input id="nome" type="text" th:field="*{nome}" class="form-control" placeholder="Informe o Nome">
+            <p th:if="${#fields.hasErrors('nome')}" class="text-danger" th:errors="*{nome}"></p>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="tipos">Dispositivos</label>
+            <select id="tipos" th:field="*{tipos}" class="form-select">
+                <option value="">Selecione</option>
+                <option th:each="ti:${tipos}" th:value="${ti}" th:text="${ti.label}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="tempo">Tempo</label>
+            <select id="tempo" th:field="*{tempo}" class="form-select">
+                <option value="">Selecione</option>
+                <option th:each="te:${tempo}" th:value="${te}" th:text="${te.label}"></option>
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" for="whatts">Potência do Aparelho (em watts)</label>
+            <input id="whatts" type="number" th:field="*{whatts}" class="form-control" placeholder="Informe a potência do aparelho">
+            <p th:if="${#fields.hasErrors('whatts')}" class="text-danger" th:errors="*{whatts}"></p>
+        </div>
+
+        <button class="btn btn-success">Cadastrar</button>
+        <a href="/homeDispositivo" class="btn btn-secondary">Voltar</a>
+    </form>
+</div>
+
+</body>
+</html>

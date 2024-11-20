@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$LAYOUT_TITLE | $CONTENT_TITLE">DaVinci Energy</title>
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #e2e2e2 0%, #ffffff 100%);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background-color: rgba(133, 132, 132, 0.77);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #0054ba !important;
+            transition: color 0.3s;
+        }
+
+        .navbar-brand:hover {
+            color: #0073ff !important;
+        }
+
+        .nav-link {
+            color: #ffffff !important;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .nav-link:hover {
+            color: #9f9f9f !important;
+            text-shadow: 0 0 5px #ffffff;
+        }
+
+        .search-button {
+            border-radius: 12px;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #28a745;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .header {
+            margin-bottom: 30px;
+            color: #343a40;
+            font-weight: bold;
+            font-size: 2.5rem;
+        }
+
+        .btn-link {
+            display: inline-block;
+            padding: 15px 25px;
+            margin: 10px 0;
+            border: 2px solid #000000;
+            border-radius: 5px;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        .btn-link:hover {
+            background-color: #1F2C44;
+            color: #5e5757;
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" th:href="@{/home}">DaVinci Energy</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            </ul>
+
+            <ul class="navbar-nav">
+                <li class="nav-item d-flex align-items-center" sec:authorize="isAuthenticated()">
+                    <span class="navbar-text">Conta: <span sec:authentication="name"></span>  </span>
+                </li>
+                <li class="nav-item" sec:authorize="hasRole('ROLE_ADMIN')">
+                    <a th:href="@{usuario/registrar}" class="btn btn-link nav-link">Registrar</a>
+                </li>
+                <li class="nav-item" sec:authorize="isAuthenticated()">
+                    <form th:action="@{/logout}" method="post" style="display:inline;">
+                        <button type="submit" class="btn btn-link nav-link">Logout</button>
+                    </form>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div layout:fragment="conteudo" class="container">
+    <h1 class="header">Bem-vindo ao Futuro</h1>
+    <div>
+        <a th:href="@{/homeMedidor}" class="btn-link">Medidor</a>
+        <a th:href="@{/homeDispositivo}" class="btn-link">Dispositivo</a>
+        <a th:href="@{/eficiencia/media}" class="btn-link">Eficiencia</a>
+    </div>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title>Calcular Eficiência Energética</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+        }
+        .card {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-header {
+            background-color: #ffffff;
+            color: #000000;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #0056b3;
+        }
+        .alert {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div layout:fragment="conteudo" class="container">
+    <div class="card">
+        <div class="card-header">
+            <h1>Calcular Eficiência Energética</h1>
+        </div>
+
+        <div class="card-body">
+            <!-- Formulário para cálculo -->
+            <form action="/eficiencia/media" method="post">
+                <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+
+                <!-- Selecione um dispositivo -->
+                <div class="mb-3">
+                    <label class="form-label" >Selecione o Dispositivo</label>
+                    <select name="dispositivo.id" class="form-select" required>
+                        <option value="">Selecione um dispositivo</option>
+                        <option th:each="di : ${dispositivo}" th:value="${di.id}" th:text="${di.nome}"></option>
+                    </select>
+                </div>
+
+                <!-- Campo para potência -->
+                <div class="mb-3">
+                    <label class="form-label" for="potencia">Tempo de uso</label>
+                    <input type="number" name="potencia" id="potencia" class="form-control" placeholder="Informe a potência do aparelho" required/>
+                </div>
+
+                <!-- Botão para calcular -->
+                <button type="submit" class="btn btn-primary btn-block">Calcular</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Exibir o resultado -->
+    <div class="mt-4">
+        <p th:if="${mediaFinal != null}" class="alert alert-success">
+            O consumo mensal é: <span th:text="${#numbers.formatDecimal(mediaFinal, 0, 2)}"></span> kWh
+        </p>
+        <p th:if="${classificacao != null}" class="alert alert-info">
+            Classificação de eficiência energética: <span th:text="${classificacao}"></span>
+        </p>
+        <p th:if="${erro != null}" class="alert alert-danger">
+            <span th:text="${erro}"></span>
+        </p>
+    </div>
+</div>
+
+</body>
+</html>

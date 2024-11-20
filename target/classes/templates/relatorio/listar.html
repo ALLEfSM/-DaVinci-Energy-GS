@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/springsecurity5"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
+    <title>Geração de Relatórios</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+        }
+        .btn-generate {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            background-color: #495057;
+            color: white;
+            border-radius: 8px;
+            padding: 10px;
+            border: none;
+        }
+        .btn-generate:hover {
+            background-color: #343a40;
+        }
+        .report-card {
+            margin-bottom: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .report-card p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+        .report-actions a {
+            margin-right: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .report-actions .view {
+            color: #007bff;
+        }
+        .report-actions .delete {
+            color: #dc3545;
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="conteudo"  class="container">
+    <h1 class="text-center">Geração de Relatórios</h1>
+
+    <!-- Botão para Gerar Relatório -->
+    <button class="btn-generate" th:onclick="'window.location.href=\'' + @{/relatorios/registrar} + '\''">Gerar Relatório</button>
+
+    <!-- Lista de Relatórios Gerados -->
+    <h3>Relatórios Gerados</h3>
+    <div th:each="relatorio : ${relatorios}" class="report-card">
+        <p th:text="'Relatório gerado em: ' + ${#dates.format(relatorio.data, 'dd/MM/yyyy, HH:mm:ss')}"></p>
+        <div class="report-actions">
+            <a th:href="@{/relatorios/listar/} + ${relatorio.id}" class="view">Visualizar</a>
+            <a th:href="@{/relatorios/excluir/} + ${relatorio.id}" class="delete">Excluir Relatório</a>
+        </div>
+    </div>
+    <a href="/home" class="btn btn-secondary">Voltar</a>
+</div>
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>
