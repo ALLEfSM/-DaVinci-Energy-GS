@@ -3,6 +3,7 @@
     <p><i>Plataforma para Monitoramento e Análise de Consumo de Energia Elétrica</i></p>
 </div>
 
+---
 
 
 ## 📋 Sobre o Projeto
